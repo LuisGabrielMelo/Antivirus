@@ -1,3 +1,7 @@
+
+import java.io.File;
+import javax.swing.JFileChooser;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -41,8 +45,18 @@ public class Ventana extends javax.swing.JFrame {
         jLabel2.setText("Archivos");
 
         jButton1.setText("Empezar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,6 +95,29 @@ public class Ventana extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    JFileChooser fc = new JFileChooser();
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int respuesta = fc.showOpenDialog(this);
+        //Comprobar si se ha pulsado Aceptar
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            //Crear un objeto File con el archivo elegido
+            File archivoElegido = fc.getSelectedFile();
+            //Mostrar el nombre del archvivo en un campo de texto
+            System.out.println("Archivo elegido: " + archivoElegido.getName());
+            String ruta=archivoElegido.getPath();
+            System.out.println("Archivo elegido: " + ruta);
+            leerarchivosdeunacarpeta(ruta);
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -114,6 +151,19 @@ public class Ventana extends javax.swing.JFrame {
                 new Ventana().setVisible(true);
             }
         });
+    }
+    public void leerarchivosdeunacarpeta(String ruta){
+        File carpeta = new File(ruta);
+        String[] listado = carpeta.list();
+        if (listado == null || listado.length == 0) {
+            System.out.println("No hay elementos dentro de la carpeta actual");
+        }
+        else {
+            for (int i=0; i< listado.length; i++) {
+                System.out.println(listado[i]);
+            }
+        }       
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
